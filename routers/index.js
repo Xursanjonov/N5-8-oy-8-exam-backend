@@ -27,6 +27,7 @@ router.get("/products", ProductsController.get);
 router.get("/products/category/:id", ProductsController.getCategory);
 router.get("/product/:id", ProductsController.getProduct);
 router.delete("/product/:id", [auth], ProductsController.delete);
+router.patch("/product/:id", [auth], ProductsController.update);
 router.post(
   "/product",
   [auth, upload.array("photos")],

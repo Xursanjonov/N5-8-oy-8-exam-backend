@@ -106,6 +106,13 @@ class ProductsController {
     try {
       const { id } = req.params;
       let product = await Products.findById(id);
+      if (!id || !product) {
+        return res.status(400).json({
+          msg: "Product id is not defined",
+          variant: "error",
+          payload: null,
+        });
+      }
       res.status(200).json({
         msg: "Product registered successfully",
         variant: "success",
@@ -179,6 +186,34 @@ class ProductsController {
         msg: "Delete products",
         variant: "success",
         payload: null,
+      });
+    } catch {
+      res.status(500).json({
+        msg: "Server error",
+        variant: "error",
+        payload: null,
+      });
+    }
+  }
+  async update(req, res) {
+    try {
+      const { id } = req.params;
+      const { error } = validateProduct(req.body);
+      const productId = await Products.findById(id);
+      if (error || !productId) {
+        return res.status(400).json({
+          msg: error.details[0].message || "Product not found",
+          variant: "warning",
+          payload: null,
+        });
+      }
+      const product = await Products.findByIdAndUpdate(id, req.body, {
+        new: true,
+      });
+      res.status(200).json({
+        msg: "Product Updated",
+        variant: "success",
+        payload: product,
       });
     } catch {
       res.status(500).json({
