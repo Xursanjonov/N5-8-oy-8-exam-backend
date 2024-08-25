@@ -3,15 +3,8 @@ const Joi = require("joi");
 
 const categorySchema = new Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    adminId: {
-      type: Schema.Types.ObjectId,
-      ref: "exam-admin",
-      required: true,
-    },
+    title: { type: String, required: true, },
+    adminId: { type: Schema.Types.ObjectId, ref: "exam-admin", required: true, },
   },
   { timestamps: true }
 );
@@ -25,4 +18,4 @@ const validateCategory = (body) => {
   });
   return schema.validate(body);
 };
-module.exports = {Categories, validateCategory}
+module.exports = { Categories, validateCategory }

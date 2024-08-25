@@ -3,38 +3,13 @@ const mongoose = require("mongoose");
 
 const adminSchema = new mongoose.Schema(
   {
-    fname: {
-      type: String,
-      required: true,
-    },
-    lname: {
-      type: String,
-      required: false,
-      default: "",
-    },
-    phone: {
-      type: String,
-      required: true,
-    },
-    username: {
-      type: String,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-    },
-    isActive: {
-      type: Boolean,
-      required: false,
-      default: true,
-    },
-    role: {
-      type: String,
-      required: true,
-      enum: ["admin", "owner"],
-      default: "admin",
-    },
+    fname: { type: String, required: true, },
+    lname: { type: String, required: false, default: "", },
+    phone: { type: String, required: true, },
+    username: { type: String, required: true, },
+    password: { type: String, required: true, },
+    isActive: { type: Boolean, required: false, default: true, },
+    role: { type: String, required: true, enum: ["admin", "owner"], default: "admin", },
   },
   { timestamps: true }
 );
@@ -53,4 +28,4 @@ const validateAdmin = (body) => {
   return schema.validate(body);
 };
 
-module.exports = {Admins, validateAdmin}
+module.exports = { Admins, validateAdmin }

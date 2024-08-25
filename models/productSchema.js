@@ -4,61 +4,19 @@ const mongoose = require("mongoose");
 
 const productSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
-    oldPrice: {
-      type: Number,
-      default: 0,
-    },
-    stock: {
-      type: Number,
-      default: 0,
-    },
-    rating: {
-      type: Number,
-      default: 0,
-    },
-    views: {
-      type: Number,
-      default: 0,
-    },
-    categoryId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "exam-category",
-    },
-    adminId: {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "exam-admin",
-    },
-    units: {
-      type: String,
-      required: true,
-    },
-    desc: {
-      type: String,
-      required: true,
-    },
-    urls: {
-      type: Array,
-      required: true,
-    },
-    info: {
-      type: Array,
-      required: false,
-      default: [],
-    },
-    available: {
-      type: Boolean,
-      default: true,
-    },
+    title: { type: String, required: true, },
+    price: { type: Number, required: true, },
+    oldPrice: { type: Number, default: 0, },
+    stock: { type: Number, default: 0, },
+    rating: { type: Number, default: 0, },
+    views: { type: Number, default: 0, },
+    categoryId: { type: Schema.Types.ObjectId, required: true, ref: "exam-category", },
+    adminId: { type: Schema.Types.ObjectId, required: true, ref: "exam-admin", },
+    units: { type: String, required: true, },
+    desc: { type: String, required: true, },
+    urls: { type: Array, required: true, },
+    info: { type: Array, required: false, default: [], },
+    available: { type: Boolean, default: true, },
   },
   { timestamps: true }
 );
@@ -84,4 +42,4 @@ const validateProduct = (body) => {
   return schema.validate(body);
 };
 
-module.exports = {Products, validateProduct}
+module.exports = { Products, validateProduct }

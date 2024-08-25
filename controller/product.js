@@ -3,25 +3,62 @@ const fs = require("fs");
 const path = require("path");
 
 class ProductsController {
+  // async get(req, res) {
+  //   try {
+  //     const { skip = 1, limit = 4, categoryId = null } = req.query;
+  //     const products = await Products.find()
+  //       .populate([{ path: "adminId", select: ["fname", "username"] }, { path: "categoryId", select: ["title"] },])
+  //       .limit(limit)
+  //       .skip((skip - 1) * limit)
+  //       .sort({ createdAt: -1 });
+  //     if (categoryId) {
+  //       products = await Products.find({ categoryId })
+  //         .limit(limit)
+  //         .skip((skip - 1) * limit)
+  //         .sort({ createdAt: -1 })
+  //     }
+  //     if (!products.length) {
+  //       return res.status(400).json({
+  //         msg: "Products is not defined",
+  //         variant: "error",
+  //         payload: null,
+  //       });
+  //     }
+  //     let total = await Products.countDocuments();
+  //     res.status(200).json({
+  //       msg: "All Products",
+  //       variant: "success",
+  //       payload: products,
+  //       total,
+  //     });
+  //   } catch (err) {
+  //     res.status(500).json({
+  //       msg: err.message || "Server error",
+  //       variant: "error",
+  //       payload: null,
+  //     });
+  //   }
+  // }
+
   async get(req, res) {
     try {
-      const { skip = 1, limit = 4 } = req.query;
-      const products = await Products.find()
-        .populate([
-          { path: "adminId", select: ["fname", "username"] },
-          { path: "categoryId", select: ["title"] },
-        ])
-        .limit(limit)
-        .skip((skip - 1) * limit)
-        .sort({ createdAt: -1 });
+      const { skip = 1, limit = 4, categoryId = null } = req.query;
+      let query = {};
+      if (categoryId) { query.categoryId = categoryId; }
+
+      const products = await Products.find(query)
+        .populate([{ path: "adminId", select: ["fname", "username"] }, { path: "categoryId", select: ["title"] },])
+        .limit(limit).skip((skip - 1) * limit).sort({ createdAt: -1 });
+
       if (!products.length) {
         return res.status(400).json({
-          msg: "Products is not defined",
+          msg: "Products are not defined",
           variant: "error",
           payload: null,
         });
       }
-      let total = await Products.countDocuments();
+
+      let total = await Products.countDocuments(query);
       res.status(200).json({
         msg: "All Products",
         variant: "success",
@@ -36,7 +73,6 @@ class ProductsController {
       });
     }
   }
-
   async getCategory(req, res) {
     try {
       const { categoryId } = req.params;
